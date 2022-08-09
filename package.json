@@ -260,6 +260,10 @@
         },
         "commands": [
             {
+                "command": "vscode-neovim.restart",
+                "title": "Neovim: restart extension"
+            },
+            {
                 "command": "vscode-neovim.send",
                 "title": "Neovim: send key to neovim, syncing if in insert mode"
             },

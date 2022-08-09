@@ -198,19 +198,14 @@ export class TypingManager implements Disposable {
 
     private handleCompositeEscapeFirstKey = async (key: string): Promise<void> => {
         const now = new Date().getTime();
-        if (this.compositeEscapeFirstPressTimestamp && now - this.compositeEscapeFirstPressTimestamp <= 200) {
-            this.compositeEscapeFirstPressTimestamp = undefined;
-            await commands.executeCommand("deleteLeft");
-            await this.onEscapeKeyCommand();
-        } else {
-            this.compositeEscapeFirstPressTimestamp = now;
-            await commands.executeCommand("type", { text: key });
-        }
+        this.compositeEscapeFirstPressTimestamp = now;
+        // insert character
+        await commands.executeCommand("default:type", { text: key });
     };
 
     private handleCompositeEscapeSecondKey = async (key: string): Promise<void> => {
         const now = new Date().getTime();
-        if (this.compositeEscapeFirstPressTimestamp && now - this.compositeEscapeFirstPressTimestamp <= 200) {
+        if (this.compositeEscapeFirstPressTimestamp && now - this.compositeEscapeFirstPressTimestamp <= 100) {
             this.compositeEscapeFirstPressTimestamp = undefined;
             await commands.executeCommand("deleteLeft");
             await this.onEscapeKeyCommand();

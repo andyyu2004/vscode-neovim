@@ -11,6 +11,13 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     const neovimPath = getNeovimPath();
     const isWindows = process.platform == "win32";
 
+    context.subscriptions.push(
+        vscode.commands.registerCommand("vscode-neovim.restart", () => {
+            while (context.subscriptions.length) context.subscriptions.pop()!.dispose();
+            activate(context);
+        }),
+    );
+
     const highlightConfIgnore = settings.get("highlightGroups.ignoreHighlights");
     const highlightConfHighlights = settings.get("highlightGroups.highlights");
     const highlightConfUnknown = settings.get("highlightGroups.unknownHighlight");
